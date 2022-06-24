@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<head>
+    <title>
+        首頁
+    </title>
+    <!--<link rel="stylesheet" href="stylePure.css">-->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="../css/table.css">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <!--    <script src="YTapi.js"></script> -->
+    <script src="../js/YTplayer.js"></script>
+    <script src="..\js\CreateData.js"></script>
+    <script src="../js/deleteLocalstorage.js"></script>
+    <script src="../js/saveChannelID.js"></script>
+    <script src="../js/globalFunction.js"></script>
+    <script src="../js/createVideoObject.js"></script>
+    <script src="../js/printImage.js"></script>
+    <script src="../js/searchFunction.js"></script>
+    <script src="../js/valueSet.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <script>
+        function setVideo() {
+            for (var i = 0, len = localStorage.length; i < len; ++i) {
+                channelName = (localStorage.key(i));
+                channelID = (localStorage.getItem(localStorage.key(i)))
+                getPlaylistID(channelName, channelID)
+            }
+
+            console.log("setVideo")
+        }
+    </script>
+</head>
+
+<body onload="setVideo()">
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">youtube頻道最近五部影片</div>
+        </div>
+
+        <div id="video"></div>
+        <form>
+            <table>
+                <thead>
+                    <th>搜尋頻道</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            請輸入關鍵字
+                        </td>
+                        <td width="250">
+                            <input value="" name="searchName" placeholder="關鍵字">
+                        </td>
+                        <td rowspan="5" style="height:600">
+                            <search>
+                            </search>
+                        </td>
+                    </tr>
+                    <td>
+                        <button name="searchButton" onClick="searchChannel(searchName.value)">
+                            開始搜尋
+                        </button>
+
+                    </td>
+                    
+
+                </tbody>
+            </table>
+        </form>
+        <form>
+            <table>
+
+
+                <thead>
+                    <tr>
+                        <th colspan="1">新增/刪除頻道</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            頻道名字:
+                        </td>
+                        <td>
+                            <input value="" name="channelName" placeholder="頻道名字">
+
+                        </td>
+                        <td rowspan="3">
+                            <prev></prev>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            頻道ID:
+                        </td>
+                        <td>
+                            <input value="" name="channelID" placeholder="頻道ID">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button id="updateList" value="update"
+                                onClick="updateChannelID(channelName.value,channelID.value)">
+                                新增清單
+                            </button>
+                        </td>
+                        <td>
+                            <button id="deleteList" value="delete" onClick="deleteChannelID(channelName.value)">
+                                刪除頻道
+                            </button>
+                        </td>
+                        <td>
+                            <!--
+                                <button id="preview" value="preview" onClick="previewChannel(channelID.value)">
+                                    預覽頻道
+                                </button>
+                                -->
+                        </td>
+                    </tr>
+
+                  <!--  <tr>
+                        <td colspan="3">
+
+                            <button id="FindVideo" value="test" onClick="findVideo()">
+                                找影片
+                            </button>
+
+                        </td>
+                    </tr>
+                    -->
+                </tbody>
+
+            </table>
+
+
+
+        </form>
+
+        <script>
+            //getPlaylistID(channelName.value,channelID.value)
+            function findVideo() {
+                for (var i = 0, len = localStorage.length; i < len; ++i) {
+                    console.log(localStorage.key(i));
+                    console.log(localStorage.getItem(localStorage.key(i)));
+                    getPlaylistID(localStorage.key(i), localStorage.getItem(localStorage.key(i)))
+                }
+
+            }
+        </script>
+        <table>
+            <thead>
+            <tr>
+                <th>
+                    <button id="printImg" onClick='findID()'>
+                        列印影片
+                    </button>
+                </th>
+                <th>
+                    <button id="deleteImg" onClick="deleteP()">
+                        刪掉影片
+                    </button>
+                </th>
+            </tr>
+        </thead>
+
+        </table>
+        <p></p>
+        <script>
+            function findID() {
+                $("p").empty()
+                for (var i = 0, len = localStorage.length; i < len; ++i) {
+                    channelName = localStorage.key(i)
+                    printIMG(channelName)
+                }
+
+            }
+        </script>
+
+
+
+        <script>
+            function deleteP() {
+                $("p").empty()
+            }
+        </script>
+
+        <!--
+<div data-v-50f88e04=""
+        class="md-layout-item md-xsmall-size-100 md-small-size-50 md-medium-size-33 md-large-size-20 md-xlarge-size-15">
+        <a data-v-50f88e04="" href="https://www.youtube.com/watch?v=mX7SfAF7IoM" target="_blank">
+            <div data-v-50f88e04="" title="【ELDEN RING】カーリアの書院探索〜〜！📚 #11【猫又おかゆ/ホロライブ】 ※ネタバレ注意"
+                class="video-box video-live">
+                <div data-v-50f88e04="" class="video-image"><img data-v-50f88e04=""
+                        src="https://i.ytimg.com/vi/mX7SfAF7IoM/mqdefault.jpg">
+                    <div data-v-50f88e04="" class="video-avatar"><img data-v-50f88e04=""
+                            src="https://yt3.ggpht.com/ytc/AKedOLTBrp9cAeaFT4Yq9DVne54QYANyrhNv8Kd6NR7N7w=s800-c-k-c0x00ffffff-no-rj-mo"
+                            referrerpolicy="no-referrer"></div>
+                </div>
+                <div data-v-50f88e04="" class="video-title color-100">【ELDEN RING】カーリアの書院探索〜〜！📚 #11【猫又おかゆ/ホロライブ】
+                    ※ネタバレ注意</div>
+                <div data-v-50f88e04="" class="video-stats color-400 md-layout">
+                    <div data-v-50f88e04="" class="md-layout-item md-small-size-40 video-stat"><i data-v-50f88e04=""
+                            class="md-icon md-icon-font md-theme-hololight"
+                            style="font-size: 16px !important;">remove_red_eye</i> <span data-v-50f88e04=""></span>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+ 
+
+<div data-v-50f88e04=""
+    </div>
+    <script src="js/CreateData.js"></script> 
+-->
+
+</body>
+
+<!-- API=AIzaSyC6rSpeISjDmtZxKP3vJOoEXE0lXhVoh1M-->
